@@ -1,17 +1,19 @@
-package zeldoz.git.uppgifter;
+package zeldoz.git.uppgifter.StorageService;
+
+import zeldoz.git.uppgifter.TransactionManager.Mytransactions;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Savemyfile {
+public class SaveMyFile {
 
     public void saveTransactionsToFile(String userID, Mytransactions[] transactions) {
         String filename = "transactions_" + userID + ".txt";
         try (FileWriter writer = new FileWriter(filename)) {
             for (Mytransactions t : transactions) {
-                writer.write(t.type + "," + t.category + "," +  + t.amount + "," + t.date + "\n");
+                writer.write(t.getType() + "," + t.getCategory() + "," +  +t.getAmount() + "," + t.getDate() + "\n");
             }
             System.out.println("Transactions for user " + userID + " saved to file.");
         } catch (IOException e) {

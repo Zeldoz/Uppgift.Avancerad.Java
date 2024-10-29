@@ -1,8 +1,8 @@
-package zeldoz.git.uppgifter;
+package zeldoz.git.uppgifter.InfoManager;
 
 import java.util.Scanner;
 
-public class MyUserLoginService {
+public class MyUserLoginService extends User {
         private final Scanner scanner;
 
         public MyUserLoginService(Scanner scanner) {
@@ -21,7 +21,7 @@ public class MyUserLoginService {
                     userID = scanner.nextInt();
                     if (User.isValidUserID(userID)) {
                         validInput = true;
-                        System.out.println("Welcome back, User " + userID);
+                        System.out.println("Welcome back, User " + userID + " you are now Logged in!");
                     } else {
                         System.out.println("Please enter a valid [4-digit: ****] user ID.");
                     }

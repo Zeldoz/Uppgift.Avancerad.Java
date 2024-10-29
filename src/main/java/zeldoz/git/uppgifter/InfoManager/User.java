@@ -1,15 +1,19 @@
-package zeldoz.git.uppgifter;
+package zeldoz.git.uppgifter.InfoManager;
 
 public class User {
 
-    private final int userID;
+    private int userID;
 
 
         public User(int userID) {
             this.userID = userID;
         }
 
-        public int getUserID() {
+
+        public User() {
+    }
+
+    public int getUserID() {
             return userID;
         }
 

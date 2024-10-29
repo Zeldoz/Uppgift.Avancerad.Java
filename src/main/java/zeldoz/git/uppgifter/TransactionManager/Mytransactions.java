@@ -1,4 +1,4 @@
-package zeldoz.git.uppgifter;
+package zeldoz.git.uppgifter.TransactionManager;
 
 import java.time.LocalDate;
 

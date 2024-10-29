@@ -1,4 +1,6 @@
-package zeldoz.git.uppgifter;
+package zeldoz.git.uppgifter.TransactionManager;
+
+import zeldoz.git.uppgifter.StorageService.SaveMyFile;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -7,12 +9,12 @@ import java.util.List;
 
 public class Mymanager {
     private final List<Mytransactions> transactions;
-    private final Savemyfile fileManager;
+    private final SaveMyFile fileManager;
     private final String userID;
 
     public Mymanager(String userID) {
         this.userID = userID;
-        this.fileManager = new Savemyfile();
+        this.fileManager = new SaveMyFile();
         
     this.transactions = fileManager.loadTransactionsFromFile(userID);
     }
