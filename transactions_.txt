@@ -1,2 +1,3 @@
 incolm,income,10000.0,1995-05-31
 income,salary,1000.0,1995-05-31
+income,bonus,10000.0,1995-05-31

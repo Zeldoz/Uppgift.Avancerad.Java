@@ -7,16 +7,18 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
-public class Mymanager {
-    private final List<Mytransactions> transactions;
-    private final SaveMyFile fileManager;
-    private final String userID;
+public class MyManager {
 
-    public Mymanager(String userID) {
+    private String userID;
+    private final SaveMyFile fileManager;
+    private List<Mytransactions> transactions;
+
+    public MyManager(String userID, SaveMyFile fileManager) {
         this.userID = userID;
-        this.fileManager = new SaveMyFile();
-        
-    this.transactions = fileManager.loadTransactionsFromFile(userID);
+        this.fileManager = fileManager;
+
+        // Load transactions from the file for the specified user ID
+        this.transactions = fileManager.loadTransactionsFromFile(userID);
     }
 
     public void viewTransactions() {
@@ -135,5 +137,9 @@ public class Mymanager {
 
     public double getDailyTotalExpenses(LocalDate date) {
         return getTotalExpensesForPeriod(date, date);
+    }
+
+    public void viewtransactions() {
+
     }
 }

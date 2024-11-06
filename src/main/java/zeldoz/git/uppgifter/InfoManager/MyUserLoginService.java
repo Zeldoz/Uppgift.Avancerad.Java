@@ -21,7 +21,8 @@ public class MyUserLoginService extends User {
                     userID = scanner.nextInt();
                     if (User.isValidUserID(userID)) {
                         validInput = true;
-                        System.out.println("Welcome back, User " + userID + " you are now Logged in!");
+                        System.out.println("Welcome back, User " + userID +"." + "\nyou are now Logged in!");
+
                     } else {
                         System.out.println("Please enter a valid [4-digit: ****] user ID.");
                     }
