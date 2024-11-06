@@ -18,7 +18,7 @@ import java.util.Scanner;
         public Menu(MyManager manager, Scanner scanner) {
             this.manager = manager;
             this.scanner = scanner;
-            initializeOptions();  // Call a method to populate options
+            initializeOptions();
         }
 
         private void initializeOptions() {
@@ -43,7 +43,7 @@ import java.util.Scanner;
             MenuOption option = options.get(choice);
             if (option != null) {
                 option.execute();
-                return !(option instanceof ExitOption);  // Return false if ExitOption is chosen
+                return !(option instanceof ExitOption);
             } else {
                 System.out.println("Invalid choice. Please try again.");
                 return true;
@@ -73,13 +73,13 @@ import java.util.Scanner;
                 String category = scanner.nextLine();
                 System.out.print("Enter amount: ");
                 double amount = scanner.nextDouble();
-                scanner.nextLine(); // Consume newline
+                scanner.nextLine();
                 LocalDate date = DateInput.promptForDate();
                 manager.addTransaction(type, category, amount, date);
                 System.out.println("Transaction added successfully.");
             } catch (Exception e) {
                 System.out.println("Error adding transaction. Please try again.");
-                scanner.nextLine(); // Clear invalid input
+                scanner.nextLine();
             }
         }
     }

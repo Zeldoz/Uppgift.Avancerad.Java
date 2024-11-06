@@ -17,7 +17,7 @@ public class MyManager {
         this.userID = userID;
         this.fileManager = fileManager;
 
-        // Load transactions from the file for the specified user ID
+
         this.transactions = fileManager.loadTransactionsFromFile(userID);
     }
 
