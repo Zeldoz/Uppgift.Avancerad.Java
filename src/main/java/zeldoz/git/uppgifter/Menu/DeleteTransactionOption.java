@@ -1,16 +1,17 @@
 package zeldoz.git.uppgifter.Menu;
 
 
-import zeldoz.git.uppgifter.StorageService.SaveMyFile;
-import zeldoz.git.uppgifter.TransactionManager.MyManager;
+
+import zeldoz.git.uppgifter.TransactionService.TransactionManager;
 
 import java.util.Scanner;
 
-public class DeleteTransactionOption implements MenuOption {
-    private final MyManager manager;
 
-    public DeleteTransactionOption(String userID, SaveMyFile fileManager) {
-        this.manager = new MyManager(userID, fileManager);
+public class DeleteTransactionOption implements MenuOption {
+    private final TransactionManager transactionManager;
+
+    public DeleteTransactionOption(TransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
     }
 
     @Override
@@ -21,12 +22,11 @@ public class DeleteTransactionOption implements MenuOption {
     @Override
     public void execute() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter type to delete: ");
-        String type = scanner.nextLine();
-        System.out.print("Enter category to delete: ");
-        String category = scanner.nextLine();
 
-        manager.deleteTransactionByString(type, category);
+        System.out.print("Enter transaction ID to delete: ");
+        int transactionId = scanner.nextInt();
+
+        transactionManager.deleteTransaction(transactionId);
         System.out.println("Transaction deleted successfully.");
     }
 }

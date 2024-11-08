@@ -1,25 +1,32 @@
 package zeldoz.git.uppgifter.InfoManager;
 
 public class User {
+    private String username;
+    private String password;
+    private boolean isLoggedIn;
 
-    private int userID;
-
-
-        public User(int userID) {
-            this.userID = userID;
-        }
-
-
-        public User() {
+    public User (String username, String password){
+        this.username = username;
+        this.password = password;
+        this.isLoggedIn = false;
     }
 
-    public int getUserID() {
-            return userID;
+    public boolean login(String inputUsername, String inputPassword){
+        if(this.username.equals(inputUsername) && this.password.equals(inputPassword)){
+            this.isLoggedIn = true;
         }
-
-
-        public static boolean isValidUserID(int userID) {
-            return userID >= 1000 && userID <= 9999;
-        }
+        return this.isLoggedIn;
     }
+
+    public void logout(){
+        this.isLoggedIn = false;
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+}
+
+
 

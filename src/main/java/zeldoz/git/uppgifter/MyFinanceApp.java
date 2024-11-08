@@ -3,46 +3,40 @@ package zeldoz.git.uppgifter;
 
 import zeldoz.git.uppgifter.InfoManager.MyUserLoginService;
 import zeldoz.git.uppgifter.InfoManager.User;
-import zeldoz.git.uppgifter.Menu.Menu;
-import zeldoz.git.uppgifter.StorageService.SaveMyFile;
-import zeldoz.git.uppgifter.TransactionManager.MyManager;
+import zeldoz.git.uppgifter.Menu.*;
+import zeldoz.git.uppgifter.TransactionService.StorageService.DatabaseService;
+import zeldoz.git.uppgifter.TransactionService.StorageService.SetStorageOption;
+import zeldoz.git.uppgifter.TransactionService.StorageService.StorageOption;
+import zeldoz.git.uppgifter.TransactionService.TransactionManager;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class MyFinanceApp {
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        DatabaseService databaseService = new DatabaseService();
+        StorageOption initialStorageMode = StorageOption.TXT_FILE;
 
+        TransactionManager transactionManager = new TransactionManager(databaseService, initialStorageMode);
+        User user = new User("Zeldoz", "password");
+        MyUserLoginService loginService = new MyUserLoginService(user);
 
-        MyUserLoginService loginService = new MyUserLoginService(scanner);
-        User user = loginService.login();
+        if (loginService.authenticator("Zeldoz", "password")) {
+            System.out.println("welcome back!" + " ZeldoZ" +". " + "You are now logged in!");
 
+            Menu menu = new Menu();
+            menu.addOption(1, new CurrentBalanceView(transactionManager));
+            menu.addOption(2, new ViewTransactions(transactionManager));
+            menu.addOption(3, new AddTransactionOption(transactionManager));
+            menu.addOption(4, new DeleteTransactionOption(transactionManager));
+            menu.addOption(5, new TotalIncomeView(transactionManager));
+            menu.addOption(6, new TotalExpensesView(transactionManager));
+            menu.addOption(7, new IncomeByTimePeriodView(transactionManager));
+            menu.addOption(8, new ExpensesByTimePeriodView(transactionManager));
+            menu.addOption(9, new SetStorageOption(transactionManager));
+            menu.addOption(10, new ExitOption());
 
-        System.out.print("Enter User ID: ");
-        String userID = scanner.nextLine();
-
-
-        SaveMyFile fileManager = new SaveMyFile();
-        MyManager manager = new MyManager(userID, fileManager);
-
-
-        Menu menu = new Menu(manager, scanner);
-        boolean isRunning = true;
-
-
-        while (isRunning) {
-            menu.displayMenu();
-            try {
-                int choice = scanner.nextInt();
-                isRunning = menu.executeOption(choice);
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid option number.");
-                scanner.nextLine();
-            }
+            menu.showMenu();
+        } else {
+            System.out.println("Login failed! Please try again!");
         }
-
-        scanner.close();
     }
 }

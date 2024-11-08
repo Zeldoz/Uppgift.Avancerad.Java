@@ -1,18 +1,26 @@
 package zeldoz.git.uppgifter.Menu;
 
 
-import zeldoz.git.uppgifter.TransactionManager.MyManager;
+import zeldoz.git.uppgifter.TransactionService.TransactionManager;
 
-public class CurrentBalanceView extends ViewOption implements MenuOption {
-    public CurrentBalanceView(MyManager manager) {
-        this.manager = manager;
+public class CurrentBalanceView implements MenuOption {
+    private final TransactionManager transactionManager;
+
+    public CurrentBalanceView(TransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
     }
 
+    @Override
     public String getDescription() {
         return "View Current Balance";
     }
 
-    protected void view() {
-        System.out.println("Current Balance: " + manager.getCurrentBalance());
+    @Override
+    public void execute() {
+        double balance = transactionManager.getAllTransactions().stream()
+                .mapToDouble(t -> t.getType().equalsIgnoreCase("Income") ? t.getAmount() : -t.getAmount())
+                .sum();
+
+        System.out.println("Current Balance: $" + balance);
     }
 }

@@ -1,17 +1,26 @@
 package zeldoz.git.uppgifter.Menu;
 
-import zeldoz.git.uppgifter.TransactionManager.MyManager;
+import zeldoz.git.uppgifter.TransactionService.Transaction;
+import zeldoz.git.uppgifter.TransactionService.TransactionManager;
 
-public class TotalIncomeView extends ViewOption implements MenuOption {
-    public TotalIncomeView(MyManager manager) {
-        super(manager);
+public class TotalIncomeView extends ViewOption {
+
+    public TotalIncomeView(TransactionManager transactionManager) {
+        super(transactionManager);
     }
 
+    @Override
     public String getDescription() {
         return "View Total Income";
     }
 
-    protected void view() {
-        System.out.println("Total Income: " + manager.getTotalIncome());
+    @Override
+    public void execute() {
+        double totalIncome = transactionManager.getAllTransactions().stream()
+                .filter(t -> t.getType().equalsIgnoreCase("Income"))
+                .mapToDouble(Transaction::getAmount)
+                .sum();
+
+        System.out.println("Total Income: $" + totalIncome);
     }
 }
