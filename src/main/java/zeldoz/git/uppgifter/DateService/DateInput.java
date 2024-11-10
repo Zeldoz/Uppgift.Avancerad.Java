@@ -25,5 +25,18 @@ import java.util.Scanner;
 
             return date;
         }
+
+        public static LocalDate parseDate (String dateStr) {
+            try {
+                return LocalDate.parse(dateStr, DATE_FORMATTER);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter date in the format YYYY-MM-DD.");
+                return null;
+            }
+        }
+
+        public static String formatDate (LocalDate date){
+            return date.format(DATE_FORMATTER);
+        }
     }
 

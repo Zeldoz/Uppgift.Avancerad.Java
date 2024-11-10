@@ -1,7 +1,9 @@
 package zeldoz.git.uppgifter.TransactionService;
 
+import zeldoz.git.uppgifter.DateService.DateInput;
 import zeldoz.git.uppgifter.TransactionService.StorageService.DatabaseService;
 import zeldoz.git.uppgifter.TransactionService.StorageService.StorageOption;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,10 +11,12 @@ import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 public class TransactionManager {
     private final DatabaseService databaseService;
     private StorageOption storageMode;
     private static final String FILE_PATH = "transactions.txt";
+
 
     public void setStorageMode(StorageOption storageMode) {
         this.storageMode = storageMode;
@@ -30,7 +34,7 @@ public class TransactionManager {
     public void addTransaction(Transaction transaction) {
         if (storageMode == StorageOption.DATABASE) {
             String sql = "INSERT INTO transactions (type, amount, category, date) VALUES (?, ?, ?, ?)";
-            databaseService.executeUpdate(sql, transaction.getType(), transaction.getAmount(), transaction.getCategory(), transaction.getDate());
+            databaseService.executeUpdate(sql, transaction.getType(), transaction.getAmount(), transaction.getCategory(), DateInput.formatDate(transaction.getDate()));
         } else if (storageMode == StorageOption.TXT_FILE) {
             saveTransactionToFile(transaction);
         }
@@ -56,7 +60,7 @@ public class TransactionManager {
     private void saveTransactionToFile(Transaction transaction) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(transaction.getId() + "," + transaction.getType() + "," + transaction.getAmount() + "," +
-                    transaction.getCategory() + "," + transaction.getDate());
+                    transaction.getCategory() + "," + DateInput.formatDate(transaction.getDate()));
             writer.newLine();
         } catch (IOException e) {
             System.err.println("Error saving transaction to file: " + e.getMessage());
@@ -73,7 +77,7 @@ public class TransactionManager {
                         rs.getString("type"),
                         rs.getDouble("amount"),
                         rs.getString("category"),
-                        rs.getString("date")
+                        DateInput.parseDate(rs.getString("date"))
                 );
                 transactions.add(transaction);
             }
@@ -94,7 +98,7 @@ public class TransactionManager {
                         parts[1],
                         Double.parseDouble(parts[2]),
                         parts[3],
-                        parts[4]
+                        DateInput.parseDate(parts[4])
                 );
                 transactions.add(transaction);
             }

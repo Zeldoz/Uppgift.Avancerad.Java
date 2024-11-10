@@ -1,8 +1,10 @@
 package zeldoz.git.uppgifter.Menu;
 
+import zeldoz.git.uppgifter.DateService.DateInput;
 import zeldoz.git.uppgifter.TransactionService.Transaction;
 import zeldoz.git.uppgifter.TransactionService.TransactionManager;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -23,17 +25,15 @@ public class ExpensesByTimePeriodView implements MenuOption {
     public void execute() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter start date (YYYY-MM-DD): ");
-        String startDate = scanner.nextLine();
+        LocalDate startDate = DateInput.promptForDate();
 
-        System.out.print("Enter end date (YYYY-MM-DD): ");
-        String endDate = scanner.nextLine();
+        LocalDate endDate = DateInput.promptForDate();
 
         List<Transaction> expenseTransactions = transactionManager.getAllTransactions().stream()
                 .filter(t -> t.getType().equalsIgnoreCase("Expense") &&
-                        t.getDate().compareTo(startDate) >= 0 &&
-                        t.getDate().compareTo(endDate) <= 0)
-                .collect(Collectors.toList());
+                        !t.getDate().isBefore(startDate) &&
+                        !t.getDate().isAfter(endDate))
+                .toList();
 
         System.out.println("Expense transactions from " + startDate + " to " + endDate + ":");
         expenseTransactions.forEach(transaction ->

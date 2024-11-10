@@ -1,8 +1,10 @@
 package zeldoz.git.uppgifter.Menu;
 
+import zeldoz.git.uppgifter.DateService.DateInput;
 import zeldoz.git.uppgifter.TransactionService.Transaction;
 import zeldoz.git.uppgifter.TransactionService.TransactionManager;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class AddTransactionOption implements MenuOption {
@@ -33,8 +35,7 @@ public class AddTransactionOption implements MenuOption {
         System.out.print("Enter category: ");
         String category = scanner.nextLine();
 
-        System.out.print("Enter date (YYYY-MM-DD): ");
-        String date = scanner.nextLine();
+        LocalDate date = DateInput.promptForDate();
 
         Transaction transaction = new Transaction(0, type, amount, category, date);
         transactionManager.addTransaction(transaction);
