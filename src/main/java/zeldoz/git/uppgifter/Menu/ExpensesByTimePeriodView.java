@@ -7,7 +7,7 @@ import zeldoz.git.uppgifter.TransactionService.TransactionManager;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
 
 public class ExpensesByTimePeriodView implements MenuOption {
     private final TransactionManager transactionManager;

@@ -11,7 +11,7 @@ import java.util.Scanner;
     public class Menu {
         private Map<Integer, MenuOption> options = new HashMap<>();
 
-        public void addOption(int number, MenuOption option){
+        public void addOption(int number, MenuOption option) {
             options.put(number, option);
 
         }
@@ -22,23 +22,33 @@ import java.util.Scanner;
                 System.out.println(entry.getKey() + ". " + entry.getValue().getDescription());
             }
         }
-            public void executeOption(int choice){
-                MenuOption option = options.get(choice);
-                if (option != null) {
-                    option.execute();
 
-                } else {
-                    System.out.println("Invalid Option, try again please!");
-                }
+        public void executeOption(int choice) {
+            MenuOption option = options.get(choice);
+            if (option != null) {
+                option.execute();
+
+            } else {
+                System.out.println("Invalid Option, try again please!");
             }
-            public void showMenu(){
-                Scanner scanner = new Scanner(System.in);
-                while(true){
-                    display();
-                    int choice = scanner.nextInt();
-                    executeOption(choice);
-                    if(choice == 10) break;
+        }
 
+        public void showMenu() {
+            Scanner scanner = new Scanner(System.in);
+            boolean isRunning = true;
+
+            while (isRunning) {
+                display();
+                int choice = scanner.nextInt();
+                executeOption(choice);
+                if (choice == 10) {
+                    System.out.println("Logging out...");
+                    isRunning = false;
+                } else if (choice == 0) {
+                    System.out.println("Exiting application...");
+                    isRunning = false;
+
+                }
             }
         }
     }

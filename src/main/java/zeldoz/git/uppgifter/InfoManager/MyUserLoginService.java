@@ -1,9 +1,9 @@
 package zeldoz.git.uppgifter.InfoManager;
 
-import java.util.Scanner;
+
 
 public class MyUserLoginService{
-    private final User user;
+    private static User user;
 
     public MyUserLoginService(User user){
         this.user = user;
@@ -13,7 +13,7 @@ public class MyUserLoginService{
         return user.login(username, password);
     }
 
-    public void logout(){
+    public static void logout(){
         user.logout();
     }
 }
